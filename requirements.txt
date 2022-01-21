@@ -1,7 +1,7 @@
 args==0.1.0
 clint==0.5.1
 decorator==4.0.10
-ipython==5.1.0
+ipython==7.16.3
 ipython-genutils==0.1.0
 pexpect==4.2.1
 pickleshare==0.7.4
