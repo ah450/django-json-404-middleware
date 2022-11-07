@@ -1,4 +1,10 @@
 from django.conf import settings
+from django.http import JsonResponse
+
+
+def default_response(request):
+    data = {"detail": "{0} not found".format(request.path)}
+    return JsonResponse(data, content_type="application/json", status=404)
 
 
 class JSON404Middleware(object):
@@ -8,7 +14,10 @@ class JSON404Middleware(object):
 
     def __init__(self, get_response):
         self.get_response = get_response
-        self.data_function = settings.JSON404_DATA_FUNCTION
+        try:
+            self.data_function = settings.JSON404_DATA_FUNCTION
+        except AttributeError:
+            self.data_function = default_response
 
     def __call__(self, request):
         response = self.get_response(request)
@@ -17,4 +26,5 @@ class JSON404Middleware(object):
             and "text/html" in response["content-type"]
         ):
             response = self.data_function(request)
+
         return response

@@ -42,7 +42,7 @@ def json404_response(request):
         "type": "{}://{}/problems/not_found/",
     }
     data["type"] = data["type"].format(request.scheme, request.get_host())
-    return JsonResponse(data, content_type="application/not-found-json", status=404)
+    return JsonResponse(data, content_type="application/problem+json", status=404)
 ```
 
 
